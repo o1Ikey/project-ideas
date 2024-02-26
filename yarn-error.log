@@ -1,0 +1,66 @@
+Arguments: 
+  C:\Users\lh222\scoop\persist\nvm\nodejs\v18.16.0\node.exe C:\Users\lh222\scoop\apps\yarn\current\bin\yarn.js lint-staged
+
+PATH: 
+  D:\AppData\Git\mingw64\libexec\git-core;C:\Users\lh222\bin;D:\AppData\Git\mingw64\bin;D:\AppData\Git\usr\local\bin;D:\AppData\Git\usr\bin;D:\AppData\Git\usr\bin;D:\AppData\Git\mingw64\bin;D:\AppData\Git\usr\bin;C:\Users\lh222\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;D:\AppData\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Users\lh222\scoop\apps\python\current\Scripts;C:\Users\lh222\scoop\apps\python\current;C:\Users\lh222\scoop\apps\yarn\current\global\node_modules\.bin;C:\Users\lh222\scoop\apps\yarn\current\bin;C:\Users\lh222\scoop\apps\nvm\current;C:\Users\lh222\scoop\apps\nvm\current\nodejs\nodejs;C:\Users\lh222\scoop\shims;C:\Users\lh222\AppData\Local\Microsoft\WindowsApps;D:\AppData\Microsoft VS Code\bin;D:\AppData\Git\usr\bin\vendor_perl;D:\AppData\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.16.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  TypeError: Cannot convert object to primitive value
+      at Array.join (<anonymous>)
+      at [format] (C:\Users\lh222\scoop\apps\yarn\1.22.19\lib\cli.js:135834:80)
+      at ShellString.toString (C:\Users\lh222\scoop\apps\yarn\1.22.19\lib\cli.js:135830:30)
+      at sh (C:\Users\lh222\scoop\apps\yarn\1.22.19\lib\cli.js:135923:55)
+      at C:\Users\lh222\scoop\apps\yarn\1.22.19\lib\cli.js:61585:52
+      at Generator.next (<anonymous>)
+      at step (C:\Users\lh222\scoop\apps\yarn\1.22.19\lib\cli.js:310:30)
+      at C:\Users\lh222\scoop\apps\yarn\1.22.19\lib\cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "project-ideas",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+      "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+      "prepare": "husky",
+      "lint-staged": {
+        "*.js": [
+          "npm run lint",
+          "npm run format",
+          "git add ."
+        ]
+    }
+    },
+    "eslintConfig": {
+      "extends": [
+        "react-app",
+        "react-app/jest"
+      ]
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "husky": "^9.0.11",
+      "lint-staged": "^15.2.2",
+      "prettier": "3.2.5"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -1,0 +1,6 @@
+build
+coverage
+docs
+jest
+
+src/generated
