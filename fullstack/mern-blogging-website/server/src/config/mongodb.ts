@@ -1,6 +1,6 @@
 import { Db, MongoClient, ServerApiVersion } from "mongodb";
 import { env } from "./environment";
-import { Maybe } from "../types/utilities";
+import { Maybe } from "../types/utils";
 
 let database: Maybe<Db> = null;
 

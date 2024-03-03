@@ -3,7 +3,8 @@ dotenv.config();
 
 import express from "express";
 import { env } from "./config/environment";
-import { connectToDB } from "./config/mongodb";
+import { connectToDB, getDatabase } from "./config/mongodb";
+import { apiV1 } from "./routes/v1";
 
 // Connect to MongoDB
 connectToDB()
@@ -14,8 +15,14 @@ connectToDB()
     process.exit(1);
   });
 
-const startServer = () => {
+const startServer = async () => {
   const app = express();
+
+  // Enable req.body data
+  app.use(express.json());
+
+  // Use APIs v1
+  app.use("/v1", apiV1);
 
   const port = env.PORT;
   app.listen(Number(port), env.HOST_NAME, () => {
