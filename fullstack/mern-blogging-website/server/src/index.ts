@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-
+import cors from "cors";
 import express from "express";
 import { env } from "./config/environment";
 import { connectToDB, getDatabase } from "./config/mongodb";
@@ -20,7 +20,7 @@ const startServer = async () => {
 
   // Enable req.body data
   app.use(express.json());
-
+  app.use(cors());
   // Use APIs v1
   app.use("/v1", apiV1);
 

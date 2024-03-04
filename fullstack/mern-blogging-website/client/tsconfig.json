@@ -24,7 +24,7 @@
       "@/*": ["./src/*", "./dist/*", ""],
       "pages/*": ["src/pages/*"],
       "components/*": ["src/components/*"],
-      "types/*": ["src/@types/*"],
+      "types/*": ["src/@types/*", "/vite/client"],
       "public/*": ["public/*"]
     }
   },

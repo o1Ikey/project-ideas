@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { getDatabase } from "../config/mongodb";
 import { UserModel } from "../models/user.model";
 import { IUser } from "../types/user.type";
