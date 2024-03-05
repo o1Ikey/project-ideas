@@ -8,11 +8,11 @@ export const signInServer = async (data: IUser) => {
   try {
     const value = await UserModel.validationSchema(data);
 
-    const user = (await getDatabase()
+    const user = await getDatabase()
       .collection(UserModel.UserCollectionName)
       .findOne({
         "personalInfo.email": value.personalInfo.email,
-      })) as unknown as IUser;
+      });
 
     if (!user) {
       throw new Error("Email not found");
@@ -26,6 +26,7 @@ export const signInServer = async (data: IUser) => {
     if (!comparedPassword) {
       throw new Error("Password doesn't match");
     }
+    return user;
   } catch (error) {
     console.log(error, "service");
     assertIsError(error);
