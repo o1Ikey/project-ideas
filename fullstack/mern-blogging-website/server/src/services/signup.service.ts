@@ -13,11 +13,11 @@ export const signUpServer = async (data: IUser) => {
     if (checkEmail) {
       throw new Error("Email already exists");
     }
-    const newValue = await formatValueSend(value);
+    const newUser = await formatValueSend(value);
 
-    const newUser = await getDatabase()
+    await getDatabase()
       .collection(UserModel.UserCollectionName)
-      .insertOne(newValue);
+      .insertOne(newUser);
 
     return newUser;
   } catch (error) {

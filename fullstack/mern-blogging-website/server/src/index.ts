@@ -5,7 +5,7 @@ import express from "express";
 import { env } from "./config/environment";
 import { connectToDB, getDatabase } from "./config/mongodb";
 import { apiV1 } from "./routes/v1";
-
+import cookieParser from "cookie-parser";
 // Connect to MongoDB
 connectToDB()
   .then(() => console.log("Connect to DB"))
@@ -18,10 +18,9 @@ connectToDB()
 const startServer = async () => {
   const app = express();
 
-  // Enable req.body data
   app.use(express.json());
-
-  // Use APIs v1
+  app.use(cors());
+  app.use(cookieParser());
   app.use("/v1", apiV1);
 
   const port = env.PORT;
