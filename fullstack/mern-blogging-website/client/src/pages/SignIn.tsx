@@ -1,18 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import googleIcon from "@/assets/images/google.png";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AnimationWrapper } from "@/common/page-animation";
 import toast, { Toaster } from "react-hot-toast";
 import { InputBox } from "@/components/input";
-import { useState } from "react";
 import axios from "axios";
 import { emailRegex } from "@/constants/regex";
+import { storeInSession } from "@/common/session";
+import { useState } from "react";
+import { useUserContext } from "@/context/user-context";
 
 export const SignIn = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+
+  const { userAuth, setUserAuth } = useUserContext();
+  const { accessToken } = userAuth.data;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,11 +37,17 @@ export const SignIn = () => {
 
     await axios
       .post(import.meta.env.VITE_SERVER_DOMAIN + "signin", formData)
-      .then(({ data }) => toast.success(data.message))
+      .then(({ data }) => {
+        storeInSession("user", JSON.stringify(data));
+        toast.success(data.message);
+        setUserAuth(data);
+      })
       .catch(({ response }) => toast.error(response.data.error));
   };
 
-  return (
+  return accessToken ? (
+    <Navigate to="/" />
+  ) : (
     <AnimationWrapper keyValue={"sign-up"}>
       <section className="h-cover flex items-center justify-center">
         <Toaster />
