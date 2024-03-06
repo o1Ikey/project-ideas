@@ -1,3 +1,5 @@
+export type Maybe<T> = null | T;
+
 export type IUserAuthForm = {
   type: "sign-in" | "sign-up";
 };

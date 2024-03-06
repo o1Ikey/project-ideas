@@ -1,20 +1,22 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from "framer-motion";
 
 type IAnimationWrapper = {
-    children:JSX.Element;
-    keyValue:'sign-in' | 'sign-up';
-    initial?:{opacity:number};
-    animate?:{opacity:number};
-    transition?:{duration:number};
-}
+  children: JSX.Element;
+  keyValue: string;
+  className?: string;
+  initial?: { opacity: number };
+  animate?: { opacity: number };
+  transition?: { duration: number };
+};
 
 export const AnimationWrapper = ({
   children,
   keyValue,
-  initial = { opacity:0 },
-  animate = { opacity:1 },
-  transition = { duration:1 }
-}:IAnimationWrapper) => {
+  className,
+  initial = { opacity: 0 },
+  animate = { opacity: 1 },
+  transition = { duration: 1 },
+}: IAnimationWrapper) => {
   return (
     <AnimatePresence>
       <motion.div
@@ -22,8 +24,10 @@ export const AnimationWrapper = ({
         initial={initial}
         animate={animate}
         transition={transition}
-      >{children}
+        className={className}
+      >
+        {children}
       </motion.div>
     </AnimatePresence>
-  )
-}
+  );
+};

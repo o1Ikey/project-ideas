@@ -9,6 +9,7 @@ import { emailRegex } from "@/constants/regex";
 import { storeInSession } from "@/common/session";
 import { useState } from "react";
 import { useUserContext } from "@/context/user-context";
+import { IToken } from "@/types/token.type";
 
 export const SignIn = () => {
   const [data, setData] = useState({
@@ -17,7 +18,7 @@ export const SignIn = () => {
   });
 
   const { userAuth, setUserAuth } = useUserContext();
-  const { accessToken } = userAuth.data;
+  const { accessToken } = userAuth.data as IToken;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
