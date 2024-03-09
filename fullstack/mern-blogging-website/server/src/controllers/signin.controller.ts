@@ -29,7 +29,7 @@ const signIn = async (req: Request, res: Response) => {
     console.log(error, "controller");
     assertIsError(error);
     res.status(403).json({
-      error: `Things exploded (${error.message})`,
+      error: `${error.message}`,
     });
   }
 };

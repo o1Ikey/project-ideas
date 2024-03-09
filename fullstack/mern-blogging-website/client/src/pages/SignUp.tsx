@@ -7,6 +7,7 @@ import { InputBox } from "@/components/input";
 import { useState } from "react";
 import { emailRegex } from "@/constants/regex";
 import axios from "axios";
+import { authWithGoogle } from "@/config/firebase";
 
 export const SignUp = () => {
   const [data, setData] = useState({
@@ -36,6 +37,21 @@ export const SignUp = () => {
       .post(import.meta.env.VITE_SERVER_DOMAIN + "signup", formData)
       .then(({ data }) => toast.success(data.message))
       .catch(({ response }) => toast.error(response.data.error));
+  };
+
+  const handleGoogleAuth = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    authWithGoogle()
+      .then((user) => {
+        console.log(user, "user");
+      })
+      .catch((err) => {
+        toast.error("trouble login through google");
+        console.log(err, "error");
+      });
   };
 
   return (
@@ -98,7 +114,10 @@ export const SignUp = () => {
             <hr className="w-1/2 border-black" />
           </div>
 
-          <button className="btn-dark flex items-center justify-center gap-4 w-[90%] center">
+          <button
+            onClick={(e) => handleGoogleAuth(e)}
+            className="btn-dark flex items-center justify-center gap-4 w-[90%] center"
+          >
             <img src={googleIcon} className="w-5" /> continue with google
           </button>
           <p className="mt-6 text-dark-grey text-xl text-center">

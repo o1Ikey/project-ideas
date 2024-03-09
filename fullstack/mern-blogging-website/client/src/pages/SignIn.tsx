@@ -10,6 +10,7 @@ import { storeInSession } from "@/common/session";
 import { useState } from "react";
 import { useUserContext } from "@/context/user-context";
 import { IToken } from "@/types/token.type";
+import { authWithGoogle } from "@/config/firebase";
 
 export const SignIn = () => {
   const [data, setData] = useState({
@@ -44,6 +45,30 @@ export const SignIn = () => {
         setUserAuth(data);
       })
       .catch(({ response }) => toast.error(response.data.error));
+  };
+
+  const handleGoogleAuth = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    try {
+      const user: any = await authWithGoogle();
+      const formData = {
+        accessToken: user?.accessToken,
+      };
+
+      const response = await axios.post(
+        import.meta.env.VITE_SERVER_DOMAIN + "/google-auth",
+        formData
+      );
+
+      storeInSession("user", JSON.stringify(response.data));
+      toast.success(response.data.message);
+      setUserAuth(response.data);
+    } catch (error) {
+      toast.error(String(error));
+    }
   };
 
   return accessToken ? (
@@ -93,7 +118,10 @@ export const SignIn = () => {
             <hr className="w-1/2 border-black" />
           </div>
 
-          <button className="btn-dark flex items-center justify-center gap-4 w-[90%] center">
+          <button
+            onClick={(e) => handleGoogleAuth(e)}
+            className="btn-dark flex items-center justify-center gap-4 w-[90%] center"
+          >
             <img src={googleIcon} className="w-5" /> continue with google
           </button>
           <p className="mt-6 text-dark-grey text-xl text-center">

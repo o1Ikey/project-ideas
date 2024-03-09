@@ -64,7 +64,7 @@ const UserCollectionSchema = Joi.object<IUser>({
     totalReads: Joi.number().default(0),
   },
   blogs: Joi.array().items(Joi.string()).default([]),
-  googleAuth: Joi.boolean(),
+  googleAuth: Joi.boolean().default(false),
   createdAt: Joi.date().timestamp().default(Date.now),
   updatedAt: Joi.date().timestamp().default(null),
 });

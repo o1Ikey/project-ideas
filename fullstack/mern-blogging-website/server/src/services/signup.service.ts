@@ -52,7 +52,7 @@ const generatePassword = async (password: string) => {
   return hashPassword;
 };
 
-const generateUsername = async (username: string) => {
+export const generateUsername = async (username: string) => {
   let isUsernameNotUnique = await getDatabase()
     .collection(UserModel.UserCollectionName)
     .findOne({ "personalInfo.username": username });

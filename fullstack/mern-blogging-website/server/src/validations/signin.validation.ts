@@ -18,7 +18,7 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
     console.log(error, "validation");
     assertIsError(error);
     res.status(403).json({
-      error: `Things exploded (${error.message})`,
+      error: `${error.message}`,
     });
   }
 };

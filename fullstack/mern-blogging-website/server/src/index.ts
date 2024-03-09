@@ -1,11 +1,23 @@
 import dotenv from "dotenv";
-dotenv.config();
 import cors from "cors";
 import express from "express";
 import { env } from "./config/environment";
-import { connectToDB, getDatabase } from "./config/mongodb";
+import { connectToDB } from "./config/mongodb";
 import { apiV1 } from "./routes/v1";
 import cookieParser from "cookie-parser";
+import admin, { ServiceAccount } from "firebase-admin";
+dotenv.config();
+
+const serviceAccount: ServiceAccount = {
+  projectId: env.PROJECT_ID,
+  privateKey: env.PRIVATE_KEY,
+  clientEmail: env.CLIENT_EMAIL,
+};
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 // Connect to MongoDB
 connectToDB()
   .then(() => console.log("Connect to DB"))

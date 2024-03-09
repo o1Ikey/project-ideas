@@ -7,6 +7,7 @@ import bcrypt from "bcrypt";
 export const signInServer = async (data: IUser) => {
   try {
     const value = await UserModel.validationSchema(data);
+    console.log(value, "value");
 
     const user = await getDatabase()
       .collection(UserModel.UserCollectionName)
@@ -14,6 +15,11 @@ export const signInServer = async (data: IUser) => {
         "personalInfo.email": value.personalInfo.email,
       });
 
+    if (user?.googleAuth) {
+      throw new Error(
+        "Email was created using google. try logging in with google"
+      );
+    }
     if (!user) {
       throw new Error("Email not found");
     }

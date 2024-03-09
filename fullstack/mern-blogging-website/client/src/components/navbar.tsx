@@ -10,6 +10,7 @@ export const Navbar = () => {
   const [searchBoxVisibility, setSearchBoxVisibility] = useState(false);
   const [showUserNavPanel, setShowUserNavPanel] = useState(false);
   const { userAuth } = useUserContext();
+
   const { accessToken, personalInfo } = userAuth.data as IUser & IToken;
 
   return (
@@ -55,11 +56,6 @@ export const Navbar = () => {
                 <button
                   className="w-12 h-12 mt-1"
                   onClick={() => setShowUserNavPanel((prev) => !prev)}
-                  onBlur={() =>
-                    setTimeout(() => {
-                      setShowUserNavPanel(false);
-                    }, 200)
-                  }
                 >
                   <img
                     src={personalInfo.profileImg}

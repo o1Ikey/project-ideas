@@ -1,15 +1,14 @@
 import { Request, Response } from "express";
 import { assertIsError } from "../types/utils";
-import { signUpServer } from "../services/signup.service";
+import { googleAuthService } from "../services/googleAuth.service";
 
-const signUp = async (req: Request, res: Response) => {
+const googleAuth = async (req: Request, res: Response) => {
   try {
-    const user = await signUpServer(req.body);
-
+    const newUser = await googleAuthService(req.body);
     res.status(201).json({
-      data: user,
+      data: newUser,
       code: 201,
-      message: "User is successfully Sign Up",
+      message: "User is successfully Sign In",
     });
   } catch (error) {
     console.log(error, "controller");
@@ -20,4 +19,4 @@ const signUp = async (req: Request, res: Response) => {
   }
 };
 
-export const SignupControllers = { signUp };
+export const GoogleAuthControllers = { googleAuth };
