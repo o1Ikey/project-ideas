@@ -10,7 +10,7 @@
     "build-babel": "babel ./src -d ./build/src",
     "build": "npm run clean && npm run build-babel",
     "production": "npm run build && node ./build/src/server.js",
-    "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.js"
+    "dev": "nodemon ./src/index.js"
   },
   "dependencies": {
     "aws-sdk": "^2.1568.0",
@@ -26,7 +26,12 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@types/node": "^20.11.23",
-    "nodemon": "^3.1.0"
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "nodemon": "^2.0.15"
   }
 }
