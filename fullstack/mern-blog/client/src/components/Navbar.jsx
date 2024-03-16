@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import logo from "../assets/images/logo.png";
 export const Navbar = () => {
@@ -44,6 +44,7 @@ export const Navbar = () => {
           </Link>
         </div>
       </nav>
+      <Outlet />
     </>
   );
 };
