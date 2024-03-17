@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import { apiV1 } from "./routes/v1/index.js";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 mongoose
@@ -22,6 +23,7 @@ const startSever = async () => {
 
   app.use(express.json());
   app.use(cors());
+  app.use(cookieParser());
 
   const PORT = process.env.PORT;
   const HOST_NAME = process.env.HOST_NAME;

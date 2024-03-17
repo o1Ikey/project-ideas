@@ -1,8 +1,21 @@
 import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import logo from "../assets/images/logo.png";
+import { UserContext } from "../contexts/user.context";
+import { UserPanel } from "./UserPanel";
+
 export const Navbar = () => {
+  const { userAuth } = useContext(UserContext);
+  const { accessToken } = userAuth.data;
+  const [showUserNavPanel, setShowUserNavPanel] = useState(false);
   const [searchBoxVisibility, setSearchBoxVisibility] = useState(false);
+
+  const getImage = (value) => {
+    if (value?.user?.personalInfo) {
+      return value?.user?.personalInfo?.profileImg;
+    }
+    return "";
+  };
 
   return (
     <>
@@ -36,12 +49,36 @@ export const Navbar = () => {
             <p>Write</p>
           </Link>
 
-          <Link to={"/signin"} className="btn-dark py-2">
-            Sign In
-          </Link>
-          <Link to={"/signup"} className="btn-light py-2 hidden md:block">
-            Sign Up
-          </Link>
+          {accessToken ? (
+            <>
+              <Link to="/dashboard/notification">
+                <button className="w-12 h-12 rounded-full bg-grey relative hover:bg-black/10">
+                  <i className="fi fi-rr-bell text-2xl block mt-1"></i>
+                </button>
+              </Link>
+              <div className="relative">
+                <button
+                  className="w-12 h-12 mt-1"
+                  onClick={() => setShowUserNavPanel((prev) => !prev)}
+                >
+                  <img
+                    src={getImage(userAuth.data)}
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                </button>
+                {showUserNavPanel && <UserPanel />}
+              </div>
+            </>
+          ) : (
+            <>
+              <Link to={"/signin"} className="btn-dark py-2">
+                Sign In
+              </Link>
+              <Link to={"/signup"} className="btn-light py-2 hidden md:block">
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
       <Outlet />

@@ -1,13 +1,16 @@
 import toast, { Toaster } from "react-hot-toast";
 import { AnimationWrapper } from "../components/AnimationWrapper";
 import { InputBox } from "../components/Input";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import googleIcon from "../assets/images/google.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { emailRegex } from "../constants/regex";
 import { userAuthThroughServer } from "../services/auth";
+import { UserContext } from "../contexts/user.context";
 
 export const SignIn = () => {
+  const { userAuth, setUserAuth } = useContext(UserContext);
+  const { accessToken } = userAuth;
   const [user, setUser] = useState({
     email: null,
     password: null,
@@ -24,10 +27,14 @@ export const SignIn = () => {
     //     "Password should be 6 to 20 characters long with a number, 1 lowercase and 1 uppercase letters"
     //   );
     const response = await userAuthThroughServer("signin", user);
-    console.log(response, "response");
+    setUserAuth({
+      data: response.data,
+    });
   };
 
-  return (
+  return accessToken ? (
+    <Navigate to="/" />
+  ) : (
     <AnimationWrapper key={"sign-up"}>
       <section className="h-cover flex items-center justify-center">
         <Toaster />

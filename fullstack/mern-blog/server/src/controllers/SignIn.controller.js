@@ -1,5 +1,10 @@
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../middleware/jwt.js";
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
+import { isNil } from "lodash-es";
 
 const SignIn = async (req, res) => {
   try {
@@ -9,14 +14,19 @@ const SignIn = async (req, res) => {
       "personalInfo.email": email,
     });
 
+    if (isNil(user)) {
+      console.log(user, "user");
+      return res.status(404).json({
+        error: "Email not Found",
+      });
+    }
+
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
     if (user?.googleAuth) {
       return res.status(409).json({
         error: "Email was created using google. try logging in with google",
-      });
-    }
-    if (!user) {
-      return res.status(404).json({
-        error: "Email not Found",
       });
     }
 
@@ -31,8 +41,17 @@ const SignIn = async (req, res) => {
       });
     }
 
+    res.cookie("REFRESH_TOKEN", refreshToken, {
+      httpOnly: true,
+      maxAge: 2 * 60 * 60 * 1000,
+    });
+
     return res.status(200).json({
-      data: user,
+      data: {
+        user,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      },
       code: 201,
       message: "User is successfully Sign In",
     });

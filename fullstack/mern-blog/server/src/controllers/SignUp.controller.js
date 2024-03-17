@@ -7,7 +7,7 @@ const SignUp = async (req, res) => {
     await newUser.save();
 
     return res.status(200).json({
-      data: user,
+      data: newUser,
       code: 201,
       message: "User is successfully Sign Up",
     });
