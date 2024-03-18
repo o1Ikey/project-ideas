@@ -7,15 +7,16 @@ import { useContext, useState } from "react";
 import { emailRegex } from "../constants/regex";
 import { userAuthThroughServer } from "../services/auth";
 import { UserContext } from "../contexts/user.context";
+import { authWithGoogle } from "../config/firebse";
 
 export const SignIn = () => {
   const { userAuth, setUserAuth } = useContext(UserContext);
-  const { accessToken } = userAuth;
+  const { accessToken } = userAuth.data.user;
   const [user, setUser] = useState({
     email: null,
     password: null,
   });
-
+  console.log(userAuth, "userAuth");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,6 +33,20 @@ export const SignIn = () => {
     });
   };
 
+  const handleGoogleAuth = async (e) => {
+    e.preventDefault();
+
+    const user = await authWithGoogle();
+    console.log(user, "user");
+    const formatData = {
+      accessToken: user?.accessToken,
+    };
+    const response = await userAuthThroughServer("googleAuth", formatData);
+
+    setUserAuth({
+      data: response.data,
+    });
+  };
   return accessToken ? (
     <Navigate to="/" />
   ) : (
@@ -79,7 +94,10 @@ export const SignIn = () => {
             <hr className="w-1/2 border-black" />
           </div>
 
-          <button className="btn-dark flex items-center justify-center gap-4 w-[90%] center">
+          <button
+            onClick={(e) => handleGoogleAuth(e)}
+            className="btn-dark flex items-center justify-center gap-4 w-[90%] center"
+          >
             <img src={googleIcon} className="w-5" /> continue with google
           </button>
           <p className="mt-6 text-dark-grey text-xl text-center">

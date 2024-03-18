@@ -9,9 +9,7 @@ import { UserContext } from "./contexts/user.context";
 function App() {
   const [userAuth, setUserAuth] = useState(() => {
     const user = getInSession("user");
-    return user
-      ? JSON.parse(user)
-      : { data: { accessToken: null, yser: { personalInfo: null } } };
+    return user ? JSON.parse(user) : { data: { user: { accessToken: null } } };
   });
   return (
     <UserContext.Provider value={{ userAuth, setUserAuth }}>

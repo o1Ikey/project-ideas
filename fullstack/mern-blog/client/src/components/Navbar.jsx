@@ -9,6 +9,7 @@ export const Navbar = () => {
   const { accessToken } = userAuth.data;
   const [showUserNavPanel, setShowUserNavPanel] = useState(false);
   const [searchBoxVisibility, setSearchBoxVisibility] = useState(false);
+  console.log(userAuth, "userAuth");
 
   const getImage = (value) => {
     if (value?.user?.personalInfo) {
@@ -49,7 +50,7 @@ export const Navbar = () => {
             <p>Write</p>
           </Link>
 
-          {accessToken ? (
+          {accessToken || userAuth.data?.user?.personalInfo ? (
             <>
               <Link to="/dashboard/notification">
                 <button className="w-12 h-12 rounded-full bg-grey relative hover:bg-black/10">

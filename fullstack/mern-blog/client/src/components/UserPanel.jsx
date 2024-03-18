@@ -6,14 +6,17 @@ import { removeFormSession } from "../utils/session";
 
 export const UserPanel = () => {
   const { userAuth, setUserAuth } = useContext(UserContext);
-  const {
-    user: { personalInfo },
-  } = userAuth.data;
-
+  // const {
+  //   user: { personalInfo },
+  // } = userAuth.data;
   const signOutUser = () => {
     removeFormSession("user");
-    setUserAuth({ data: { accessToken: null } });
+    setUserAuth({ data: { user: { accessToken: null } } });
   };
+
+  const { personalInfo } = userAuth.data.user;
+  console.log(personalInfo, "userAuth");
+
   return (
     <AnimationWrapper
       keyValue="menu-option"

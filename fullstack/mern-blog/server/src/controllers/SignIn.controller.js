@@ -15,7 +15,6 @@ const SignIn = async (req, res) => {
     });
 
     if (isNil(user)) {
-      console.log(user, "user");
       return res.status(404).json({
         error: "Email not Found",
       });

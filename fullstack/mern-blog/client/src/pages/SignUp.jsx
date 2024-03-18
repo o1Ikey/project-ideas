@@ -6,6 +6,7 @@ import googleIcon from "../assets/images/google.png";
 import { useState } from "react";
 import { emailRegex } from "../constants/regex";
 import { userAuthThroughServer } from "../services/auth";
+import { authWithGoogle } from "../config/firebse";
 
 export const SignUp = () => {
   const [user, setUser] = useState({
@@ -26,8 +27,20 @@ export const SignUp = () => {
     //     "Password should be 6 to 20 characters long with a number, 1 lowercase and 1 uppercase letters"
     //   );
 
-    const response = await userAuthThroughServer("signup", user);
-    console.log(response, "response");
+    await userAuthThroughServer("signup", user);
+  };
+
+  const handleGoogleAuth = (e) => {
+    e.preventDefault();
+
+    authWithGoogle()
+      .then((user) => {
+        console.log(user, "user");
+      })
+      .catch((err) => {
+        toast.error("trouble login through google");
+        console.log(err, "error");
+      });
   };
 
   return (
@@ -90,7 +103,10 @@ export const SignUp = () => {
             <hr className="w-1/2 border-black" />
           </div>
 
-          <button className="btn-dark flex items-center justify-center gap-4 w-[90%] center">
+          <button
+            onClick={(e) => handleGoogleAuth(e)}
+            className="btn-dark flex items-center justify-center gap-4 w-[90%] center"
+          >
             <img src={googleIcon} className="w-5" /> continue with google
           </button>
           <p className="mt-6 text-dark-grey text-xl text-center">
