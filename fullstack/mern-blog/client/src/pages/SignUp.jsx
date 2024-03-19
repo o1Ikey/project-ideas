@@ -46,7 +46,6 @@ export const SignUp = () => {
   return (
     <AnimationWrapper keyValue={"sign-up"}>
       <section className="h-cover flex items-center justify-center">
-        <Toaster />
         <form onSubmit={handleSubmit} className="w-[80%] max-w-[400px]">
           <h1 className="text-4xl font-gelasio capitalize text-center mb-24">
             Join us today

@@ -37,9 +37,7 @@ const GoogleAuth = async (req, res) => {
     };
 
     res.status(201).json({
-      data: {
-        user: newUser,
-      },
+      data: newUser,
       code: 201,
       message: "User is successfully Sign In",
     });

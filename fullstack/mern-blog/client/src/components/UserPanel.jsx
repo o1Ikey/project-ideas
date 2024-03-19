@@ -1,21 +1,18 @@
 import { Link } from "react-router-dom";
 import { AnimationWrapper } from "./AnimationWrapper";
 import { useContext } from "react";
-import { UserContext } from "../contexts/user.context";
+import { UserContext } from "../contexts/user";
 import { removeFormSession } from "../utils/session";
 
 export const UserPanel = () => {
   const { userAuth, setUserAuth } = useContext(UserContext);
-  // const {
-  //   user: { personalInfo },
-  // } = userAuth.data;
+  const {
+    user: { personalInfo },
+  } = userAuth.data;
   const signOutUser = () => {
     removeFormSession("user");
     setUserAuth({ data: { user: { accessToken: null } } });
   };
-
-  const { personalInfo } = userAuth.data.user;
-  console.log(personalInfo, "userAuth");
 
   return (
     <AnimationWrapper

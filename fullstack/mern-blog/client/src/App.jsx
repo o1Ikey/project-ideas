@@ -4,7 +4,9 @@ import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
 import { useState } from "react";
 import { getInSession } from "./utils/session";
-import { UserContext } from "./contexts/user.context";
+import { UserContext } from "./contexts/user";
+import { Editor } from "./pages/Editor";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [userAuth, setUserAuth] = useState(() => {
@@ -19,6 +21,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
         </Route>
       </Routes>
+      <Toaster />
     </UserContext.Provider>
   );
 }

@@ -6,17 +6,16 @@ import googleIcon from "../assets/images/google.png";
 import { useContext, useState } from "react";
 import { emailRegex } from "../constants/regex";
 import { userAuthThroughServer } from "../services/auth";
-import { UserContext } from "../contexts/user.context";
+import { UserContext } from "../contexts/user";
 import { authWithGoogle } from "../config/firebse";
 
 export const SignIn = () => {
   const { userAuth, setUserAuth } = useContext(UserContext);
-  const { accessToken } = userAuth.data.user;
+  const { accessToken } = userAuth.data;
   const [user, setUser] = useState({
     email: null,
     password: null,
   });
-  console.log(userAuth, "userAuth");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -28,6 +27,7 @@ export const SignIn = () => {
     //     "Password should be 6 to 20 characters long with a number, 1 lowercase and 1 uppercase letters"
     //   );
     const response = await userAuthThroughServer("signin", user);
+
     setUserAuth({
       data: response.data,
     });
@@ -37,14 +37,19 @@ export const SignIn = () => {
     e.preventDefault();
 
     const user = await authWithGoogle();
-    console.log(user, "user");
     const formatData = {
       accessToken: user?.accessToken,
     };
     const response = await userAuthThroughServer("googleAuth", formatData);
 
     setUserAuth({
-      data: response.data,
+      data: {
+        accessToken: response.data.accessToken,
+        googleAuth: response.data.googleAuth,
+        user: {
+          personalInfo: response.data.personalInfo,
+        },
+      },
     });
   };
   return accessToken ? (
@@ -52,7 +57,6 @@ export const SignIn = () => {
   ) : (
     <AnimationWrapper key={"sign-up"}>
       <section className="h-cover flex items-center justify-center">
-        <Toaster />
         <form onSubmit={handleSubmit} className="w-[80%] max-w-[400px]">
           <h1 className="text-4xl font-gelasio capitalize text-center mb-24">
             Welcome back
