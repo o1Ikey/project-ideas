@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { useContext, useState } from "react";
 import logo from "../assets/images/logo.png";
-import { UserContext } from "../contexts/user.context";
+import { UserContext } from "../contexts/user";
 import { UserPanel } from "./UserPanel";
 
 export const Navbar = () => {
@@ -9,7 +9,6 @@ export const Navbar = () => {
   const { accessToken } = userAuth.data;
   const [showUserNavPanel, setShowUserNavPanel] = useState(false);
   const [searchBoxVisibility, setSearchBoxVisibility] = useState(false);
-  console.log(userAuth, "userAuth");
 
   const getImage = (value) => {
     if (value?.user?.personalInfo) {
